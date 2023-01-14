@@ -6,22 +6,29 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Document(indexName = "wiki_page")
 public class WikiPage {
 
     @Id
-    private String id;
+    private String title;
+
+    @Field(type = FieldType.Keyword)
+    private String revisionId;
+
+    @Field(type = FieldType.Date)
+    private LocalDateTime dateTime;
+
+    @Field(type = FieldType.Keyword)
+    private String[] categories;
+
+    @Field(type = FieldType.Nested)
+    private List<SubInfo> subInfos;
 
     @Field(type = FieldType.Text)
-    private String url;
-
-    @Field(type = FieldType.Auto)
-    private Set<Category> categories;
-
-    @Field(type = FieldType.Text)
-    private String description;
+    private String mainText;
 
 }
